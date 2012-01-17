@@ -1,4 +1,4 @@
-package org.asusual.test {
+package org.asusual.pdfcase.test {
 	import org.asusual.pdfcase.Page;
 	import org.asusual.pdfcase.PDF;
 	import org.asusual.pdfcase.TextLine;	

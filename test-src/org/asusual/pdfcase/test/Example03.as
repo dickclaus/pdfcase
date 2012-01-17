@@ -1,4 +1,4 @@
-package org.asusual.test {
+package org.asusual.pdfcase.test {
 	import org.asusual.pdfcase.A4;
 	import org.asusual.pdfcase.Font;
 	import org.asusual.pdfcase.Image;

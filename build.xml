@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="pdfcase" default="all" basedir=".">
+
+    <property name="LOCALE" value="en_US" />
+    <property file="${basedir}/build.properties" />
+    <taskdef resource="flexTasks.tasks"
+             classpath="${FLEX_HOME}/ant/lib/flexTasks.jar"
+    />
+
+    <tstamp>
+        <format property="year" pattern="yyyy" locale="en" />
+        <format property="datetime" pattern="EE MMM d yyyy h:mm aa" />
+    </tstamp>
+    <property name="name" value="" />
+    <property name="version" value="0.6" />
+
+    <property name="src.dir" value="${basedir}/src" />
+    <property name="pv3d.src" value="${basedir}/PV3D" />
+    <property name="pv3d.dir" value="${basedir}/bin/" />
+    <property name="bin.dir" value="${basedir}/bin/" />
+
+    <!-- ================================= 
+          target: all              
+         ================================= -->
+    <target name="all"
+            depends="clean, init, build.swc"
+            description="All targets to compile library"
+    />
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: clean                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="clean" description="Removes bin directory">
+        <delete dir="${bin.dir}" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: init                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="init">
+        <mkdir dir="${bin.dir}" />
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: build.swc                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="build.swc">
+        <path id="lib.files">
+            <fileset dir="${src.dir}">
+                <include name="**/**" />
+            </fileset>
+        </path>
+        <pathconvert property="lib.classes"
+                     pathsep=" "
+                     dirsep="."
+                     refid="lib.files"
+        >
+            <map from="${src.dir}/" to="" />
+            <mapper>
+                <chainedmapper>
+                    <globmapper from="*.as" to="*" />
+                </chainedmapper>
+            </mapper>
+        </pathconvert>
+
+        <!-- Now we build the .swc -->
+        <compc output="${bin.dir}/pdfcase.swc" include-classes="${lib.classes}">
+            <compiler.library-path dir="${bin.dir}" append="true">
+            </compiler.library-path>
+
+            <source-path path-element="${src.dir}/" />
+
+        </compc>
+    </target>
+
+</project>
